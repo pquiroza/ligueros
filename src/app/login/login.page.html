@@ -1,0 +1,22 @@
+<ion-content>
+<div class="center">
+  <ion-img [src]="'/assets/pelota2.png'" padding-vertical>
+
+    </ion-img >
+    </div>
+  <p>
+Liguer@s es una aplicación que te permite administrar todas las ligas en las que participas en un solo lugar
+  </p>
+
+  <p>
+    Para registrarte sólo debes ingresar tu número móvil
+    </p>
+
+  <ion-item>
+    <ion-label color="danger" position="stacked">Número de Celular <ion-text color="danger">*</ion-text></ion-label>
+    <ion-input required color="light" size="20" type="text" id="celular" #celular></ion-input>
+  </ion-item>
+
+<ion-button  expand="block" id="sign-in-button" color="medium" (click)="signIn(celular.value)">Registrar</ion-button>
+  <div id="recaptcha-container"></div>
+</ion-content>

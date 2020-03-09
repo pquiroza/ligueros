@@ -1,0 +1,64 @@
+<ion-header>
+
+  <ion-toolbar  class="tabs_bar">
+    <ion-segment [(ngModel)]="segment">
+      <ion-segment-button value="perfil">Mis Datos
+
+      </ion-segment-button>
+      <ion-segment-button value="preferencias">Preferencias
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+<ion-content  padding>
+  <!-- Notification  -->
+
+
+  <!-- Account Details -->
+  <div [ngSwitch]="segment">
+<div *ngSwitchDefault>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="/assets/pelota2.png">
+      </ion-avatar>
+      <ion-label color="light">Nombre de usuario</ion-label>
+    </ion-item>
+    <p *ngIf="submitAttempt" style="color: #ea6153;">Debe llenar todos los campos antes de guardar Perfil</p>
+
+
+    <div class="appForm"  margin-top>
+      <ion-list>
+          <form [formGroup]="perfilForm">
+        <ion-item>
+          <ion-icon name="call"  color="light" item-left></ion-icon>
+            <ion-input type="text" color="light" disabled  placeholder="Telefono" value="{{usuario.phoneNumber}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="person" item-left></ion-icon>
+          <ion-input type="text" color="light" formControlName="nombre" id="nombre" #nombre placeholder="Juan Perez" value="{{us.nombre}}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="ios-unlock" item-left></ion-icon>
+          <ion-input type="text" color="light" formControlName="rut" id="rut" #rut value="{{us.rut}}" placeholder="10123456-7"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="ios-unlock" item-left></ion-icon>
+          <ion-input type="text" color="light" formControlName="fechanacimiento" id="fechanacimiento" #fechanacimiento  value="{{us.fechanacimiento}}"placeholder="29/02/1987"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="ios-unlock" item-left></ion-icon>
+          <ion-input type="text"  color="light" formControlName="correo" id="correo" #correo value="{{us.correo}}" placeholder="nombre@correo.com"></ion-input>
+        </ion-item>
+        <ion-button  expand="block" color="light" id="sign-in-button" color="medium" (click)="updatePerfil()">Actualizar</ion-button>
+
+        </form>
+      </ion-list>
+    </div>
+    </div>
+    <div *ngSwitchCase="'preferencias'">
+      <h2>Aca lista de Equipos y Campeonatos</h2>
+      </div>
+  </div>
+
+
+</ion-content>

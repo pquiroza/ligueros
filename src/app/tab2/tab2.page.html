@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Campeonatos
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+<ion-list>
+  <ion-list-header>
+    Campeonatos Vigentes
+    </ion-list-header>
+    <ion-item *ngFor="let c of campeonatos | async" (click)="detalleCampeonato(c.id)">
+      <ion-label>
+        <h2>{{c.nombre}}</h2>
+        <h3>{{c.tipo}}</h3>
+        <p>{{c.direccion}}</p>
+      </ion-label>
+      </ion-item>
+
+  </ion-list>
+
+</ion-content>

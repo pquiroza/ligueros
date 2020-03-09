@@ -1,0 +1,40 @@
+ion-content {
+ --ion-background-color:	#4a4a4a
+}
+p {
+ padding: 0 40px;
+ font-size: 20px;
+ line-height: 1.5;
+ color: white;
+ align: center;
+
+ b {
+   color: #000000;
+ }
+}
+
+ion-grid {
+ position: fixed;
+ bottom: 30%;
+
+
+}
+
+h2{
+ font-size: 16px;
+ color: #FFFFFF;
+ text-align: center;
+ padding: 0 40px;
+ width: 100%;
+}
+ion-img{
+  width: 150px;
+  height: 150px;
+ align: center;
+  }
+
+  .center {
+   display: block;
+   margin: auto;
+   width: 50%;
+  }
