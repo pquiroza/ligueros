@@ -12,11 +12,11 @@
   <ion-list-header>
     Campeonatos Vigentes
     </ion-list-header>
-    <ion-item *ngFor="let c of campeonatos | async" (click)="detalleCampeonato(c.id)">
+    <ion-item *ngFor="let c of campeonatos " (click)="detalleCampeonato(c.id)">
       <ion-label>
         <h2>{{c.nombre}}</h2>
         <h3>{{c.tipo}}</h3>
-        <p>{{c.direccion}}</p>
+        <p>{{c.fechainicio}}</p>
       </ion-label>
       </ion-item>
 

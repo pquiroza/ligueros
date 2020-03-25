@@ -9,14 +9,15 @@ Liguer@s es una aplicación que te permite administrar todas las ligas en las qu
   </p>
 
   <p>
-    Para registrarte sólo debes ingresar tu número móvil
-    </p>
+Si ya tienes cuenta inicia sesión, sino registrate aqui    </p>
 
   <ion-item>
-    <ion-label color="danger" position="stacked">Número de Celular <ion-text color="danger">*</ion-text></ion-label>
-    <ion-input required color="light" size="20" type="text" id="celular" #celular></ion-input>
+    <ion-label color="danger" position="stacked">Email <ion-text color="danger">*</ion-text></ion-label>
+    <ion-input required color="light" size="20" type="text" id="email" #email></ion-input>
   </ion-item>
-
-<ion-button  expand="block" id="sign-in-button" color="medium" (click)="signIn(celular.value)">Registrar</ion-button>
-  <div id="recaptcha-container"></div>
+  <ion-item>
+    <ion-label color="danger" position="stacked">Número de Celular <ion-text color="danger">*</ion-text></ion-label>
+    <ion-input required color="light" size="20" type="password" id="password" #password></ion-input>
+  </ion-item>
+<ion-button  expand="block" id="sign-in-button" color="medium" (click)="signIn(email.value, password.value)">Registrar</ion-button>
 </ion-content>

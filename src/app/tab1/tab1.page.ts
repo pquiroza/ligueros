@@ -28,7 +28,7 @@ export class Tab1Page {
           else
         {
           console.log(usuario);
-          this.router.navigate(['/tabs/perfil']);
+        //  this.router.navigate(['/tabs/perfil']);
           console.log("NO EXISTE CTM");
         }
         })

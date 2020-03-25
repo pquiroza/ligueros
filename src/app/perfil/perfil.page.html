@@ -31,7 +31,7 @@
           <form [formGroup]="perfilForm">
         <ion-item>
           <ion-icon name="call"  color="light" item-left></ion-icon>
-            <ion-input type="text" color="light" disabled  placeholder="Telefono" value="{{usuario.phoneNumber}}"></ion-input>
+            <ion-input type="text" color="light" formControlName="telefono"  placeholder="Telefono" id="telefono" #telefono value="{{us.telefono}}"></ion-input>
         </ion-item>
         <ion-item>
           <ion-icon name="person" item-left></ion-icon>

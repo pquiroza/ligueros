@@ -26,7 +26,28 @@ export class PerfilPage implements OnInit {
   constructor(private router: Router, public formBuilder: FormBuilder, private afs: AngularFirestore, public alertCtrl: AlertController,private http: HttpClient) {
     this.usuario = [];
     this.us = [];
+
+
+
+    firebase.auth().onAuthStateChanged(usuario => {
+      if (!usuario){
+        this.router.navigate(['/login']);
+      }
+      else{
+        this.http.get('http://190.101.192.149/ligueros/api/getdatosusuario?id='+usuario.uid).subscribe(result => {
+
+          this.us = result;
+          console.log(this.us);
+        })
+
+
+      }
+    })
+
+
+
     this.perfilForm = formBuilder.group({
+        telefono:['',Validators.compose([Validators.required])],
        nombre:['', Validators.compose([Validators.required])],
        rut:['',Validators.compose([Validators.required])],
        correo:['',Validators.compose([Validators.required])],
@@ -36,26 +57,7 @@ export class PerfilPage implements OnInit {
 
 
 
-    firebase.auth().onAuthStateChanged(usuario => {
-      if (!usuario){
-        this.router.navigate(['/login']);
-      }
-      else{
-        this.http.get('http://190.101.192.149/ligueros/api/getdatosusuario').subscribe(result => {
-          console.log(result);
-        })
 
-
-        console.log(usuario)
-        this.usuario = usuario;
-        let usuariosCollection: AngularFirestoreCollection<Usuario> = this.afs.collection('Usuarios');
-        usuariosCollection.doc(usuario.uid).valueChanges().subscribe(data => {
-          console.log(data);
-          this.us = data;
-        })
-        console.log(this.us);
-      }
-    })
 
    }
 
@@ -70,10 +72,12 @@ var user = firebase.auth().currentUser;
   else{
 
     console.log(this.perfilForm.value)
-    this.usuariosCollecion = this.afs.collection('Usuarios');
-      const us: Usuario = {id: user.uid,nombre:this.perfilForm.value.nombre, rut: this.perfilForm.value.rut,fechanacimiento: this.perfilForm.value.fechanacimiento, correo: this.perfilForm.value.correo, telefono:this.usuario.phoneNumber, tipo: 0  }
-      this.usuariosCollecion.doc(user.uid).set(us);
-      this.muestraAlerta();
+    this.http.get('http://190.101.192.149/ligueros/api/actualizausuario?id='+user.uid+'&telefono='+this.perfilForm.value.telefono+'&nombre='+this.perfilForm.value.nombre+'&rut='+this.perfilForm.value.rut+'&fechanacimiento='+this.perfilForm.value.fechanacimiento+'&correo='+this.perfilForm.value.correo).subscribe(result => {
+      console.log(result);
+    })
+
+
+
     /*
     var user = firebase.auth().currentUser;
     console.log(user);
