@@ -6,7 +6,7 @@
 
 
 ion-content {
- --ion-background-color: #1e2023
+ --ion-background-color: #4a4a4a
 }
 
 ion-card{
@@ -22,4 +22,10 @@ h2{
 }
 p{
     color: #f4f5f8
+}
+ion-toggle{
+  --background: #CD5C5C
+}
+ion-list-header{
+  --background: #E5E8E8
 }

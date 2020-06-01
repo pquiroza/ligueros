@@ -12,6 +12,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
+import { IonicStorageModule } from '@ionic/storage';
 
 firebase.initializeApp(environment.firebase);
 @NgModule({
@@ -20,7 +21,8 @@ firebase.initializeApp(environment.firebase);
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
   AngularFirestoreModule,
-  HttpClientModule
+  HttpClientModule,
+  IonicStorageModule.forRoot()
 ],
   providers: [
     StatusBar,

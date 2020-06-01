@@ -17,6 +17,14 @@ const routes: Routes = [
   {
     path: 'detallecampeonato',
     loadChildren: () => import('./detallecampeonato/detallecampeonato.module').then( m => m.DetallecampeonatoPageModule)
+  },
+  {
+    path: 'detalleequipo',
+    loadChildren: () => import('./detalleequipo/detalleequipo.module').then( m => m.DetalleequipoPageModule)
+  },
+  {
+    path: 'tab4',
+    loadChildren: () => import('./tab4/tab4.module').then( m => m.Tab4PageModule)
   }
 ];
 @NgModule({

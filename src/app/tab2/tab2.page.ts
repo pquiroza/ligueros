@@ -3,14 +3,15 @@ import * as firebase from "firebase";
 import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument  } from '@angular/fire/firestore';
 import { Campeonato } from '../campeonato';
+import { Storage } from '@ionic/storage';
 
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-
+import { environment } from '../../environments/environment';
 
 export interface CampeonatoId extends Campeonato{
   id:string;
@@ -22,45 +23,56 @@ export interface CampeonatoId extends Campeonato{
 })
 export class Tab2Page {
 
-  public campeonatoCollection: AngularFirestoreCollection<Campeonato>;
-campeonatos: Campeonato[] = [];
 
-  constructor(private router: Router, private afs: AngularFirestore, private http: HttpClient) {
+campeonatos: any[] = [];
+favoritos: any[] = [];
+favs: any[] = [];
+headers; any
+  constructor(private router: Router, private afs: AngularFirestore, private http: HttpClient, private storage: Storage) {
 
-    firebase.auth().onAuthStateChanged(usuario => {
-      if (usuario){
-        this.http.get('http://190.101.192.149/ligueros/api/getcampeonatos').subscribe((result: any[] )=> {
 
-          console.log(result)
-          result.forEach(r => {
-
-               let campeonato: Campeonato = {id:r[0],nombre:r[1],estado:r[2],fechainicio:r[3],tipo:r[5]}
-               console.log(campeonato)
-                this.campeonatos.push(campeonato)
-          })
-
-        })
-        /*
-        this.campeonatoCollection = this.afs.collection<Campeonato>('Campeonatos');
-        this.campeonatos = this.campeonatoCollection.snapshotChanges().pipe(map(actions => actions.map(a => {
-          const data = a.payload.doc.data();
-          console.log(data);
-          const id = a.payload.doc.id;
-          return{id, ...data}
-        })))
-        */
-      }
-      else{
-
-      }
-    })
 
 
   }
 
+
   detalleCampeonato(idc){
     console.log(idc);
     this.router.navigate(['/detallecampeonato'],{queryParams:{idc:idc}})
+  }
+
+  ionViewDidEnter(){
+    this.campeonatos = []
+      firebase.auth().onAuthStateChanged(usuario => {
+if(usuario){
+                this.storage.get('tok').then(val => {
+                  this.headers = new HttpHeaders({
+                    'Authorization': "Bearer "+val
+
+                  });
+                  this.http.get(environment.server+'/allCampeonatos',{headers:this.headers}).subscribe((u: any) => {
+
+                      u.forEach(c => {
+                        console.log(c)
+                        this.campeonatos.push(c)
+                      })
+
+                  })
+                  this.http.get(environment.server+'/sigue?IdGoogle='+usuario.uid,{headers: this.headers}).subscribe((f: any) => {
+                    console.log(f)
+                    this.favoritos = f;
+                  })
+                })
+
+
+
+
+
+        }
+      })
+
+
+
   }
 
 }

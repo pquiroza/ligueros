@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Calendario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4 text-left>
+        <p>Local</p>
+        </ion-col>
+        <ion-col text-center>
+          <p>Resultado</p>
+          </ion-col>
+          <ion-col text-right>
+            <p>Visita</p>
+            </ion-col>
+      </ion-row>
+      <ion-row *ngFor="let c of calendario"   >
+        <ion-col class="ion-align-self-center"  text-left>
+          <p>{{c.EQUIPOL}}</p>
+          </ion-col>
+          <ion-col text-center >
+  <h6 *ngIf="c.FECHA=='None'">No agendado</h6>
+  <h6 *ngIf="c.FECHA!='None'">{{c.FECHA}}</h6>
+      <h3 *ngIf="c.GOLESL=='None'">0 - 0</h3>
+            <h3 *ngIf="c.GOLESL!='None'">{{c.GOLESL}} - {{c.GOLESV}}</h3>
+            </ion-col>
+            <ion-col class="ion-align-self-center" text-right>
+              <p>{{c.EQUIPOV}}</p>
+              </ion-col>
+        </ion-row>
+    </ion-grid>
+
+</ion-content>

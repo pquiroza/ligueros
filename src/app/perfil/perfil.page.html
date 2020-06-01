@@ -1,13 +1,7 @@
 <ion-header>
 
   <ion-toolbar  class="tabs_bar">
-    <ion-segment [(ngModel)]="segment">
-      <ion-segment-button value="perfil">Mis Datos
 
-      </ion-segment-button>
-      <ion-segment-button value="preferencias">Preferencias
-      </ion-segment-button>
-    </ion-segment>
   </ion-toolbar>
 </ion-header>
 <ion-content  padding>
@@ -15,8 +9,8 @@
 
 
   <!-- Account Details -->
-  <div [ngSwitch]="segment">
-<div *ngSwitchDefault>
+
+<div *ngIf="opcion=='perfil'">
     <ion-item>
       <ion-avatar slot="start">
         <img src="/assets/pelota2.png">
@@ -31,23 +25,19 @@
           <form [formGroup]="perfilForm">
         <ion-item>
           <ion-icon name="call"  color="light" item-left></ion-icon>
-            <ion-input type="text" color="light" formControlName="telefono"  placeholder="Telefono" id="telefono" #telefono value="{{us.telefono}}"></ion-input>
+            <ion-input type="text" color="light" formControlName="Telefono"  placeholder="Telefono" id="Telefono" #Telefono value="{{us.TELEFONO}}"></ion-input>
         </ion-item>
         <ion-item>
           <ion-icon name="person" item-left></ion-icon>
-          <ion-input type="text" color="light" formControlName="nombre" id="nombre" #nombre placeholder="Juan Perez" value="{{us.nombre}}"></ion-input>
+          <ion-input type="text" color="light" formControlName="Nombre" id="Nombre" #Nombre placeholder="Juan Perez" value="{{us.NOMBREUSUARIO}}"></ion-input>
         </ion-item>
         <ion-item>
           <ion-icon name="ios-unlock" item-left></ion-icon>
-          <ion-input type="text" color="light" formControlName="rut" id="rut" #rut value="{{us.rut}}" placeholder="10123456-7"></ion-input>
+          <ion-input type="text" color="light" formControlName="Rut" id="Rut" #Rut value="{{us.RUT}}" placeholder="10123456-7"></ion-input>
         </ion-item>
         <ion-item>
           <ion-icon name="ios-unlock" item-left></ion-icon>
-          <ion-input type="text" color="light" formControlName="fechanacimiento" id="fechanacimiento" #fechanacimiento  value="{{us.fechanacimiento}}"placeholder="29/02/1987"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="ios-unlock" item-left></ion-icon>
-          <ion-input type="text"  color="light" formControlName="correo" id="correo" #correo value="{{us.correo}}" placeholder="nombre@correo.com"></ion-input>
+          <ion-input type="text"  color="light" formControlName="Correo" id="Correo" #Correo value="{{us.CORREO}}" placeholder="nombre@correo.com"></ion-input>
         </ion-item>
         <ion-button  expand="block" color="light" id="sign-in-button" color="medium" (click)="updatePerfil()">Actualizar</ion-button>
 
@@ -55,10 +45,45 @@
       </ion-list>
     </div>
     </div>
-    <div *ngSwitchCase="'preferencias'">
-      <h2>Aca lista de Equipos y Campeonatos</h2>
+    <div *ngIf="opcion=='notificaciones'">
+    <ion-list>
+      <ion-list-header>
+        <ion-label>Configuración Notificaciones</ion-label>
+        </ion-list-header>
+        <ion-item>
+   <ion-label>Noticias</ion-label>
+   <ion-toggle></ion-toggle>
+   </ion-item>
+   <ion-item>
+<ion-label>Calendario</ion-label>
+<ion-toggle></ion-toggle>
+</ion-item>
+<ion-item>
+<ion-label>Resultados</ion-label>
+<ion-toggle></ion-toggle>
+</ion-item>
+<ion-item>
+<ion-label>Resultados Equipos</ion-label>
+<ion-toggle></ion-toggle>
+</ion-item>
+<ion-item>
+<ion-label>Calendario Equipos</ion-label>
+<ion-toggle></ion-toggle>
+</ion-item>
+      </ion-list>
       </div>
+<div *ngIf="opcion=='mensajes'">
   </div>
 
+  <ion-fab vertical="bottom" horizontal="end"  slot="fixed">
+  <ion-fab-button>
+    <ion-icon name="settings"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="start" >
+    <ion-fab-button><ion-icon src="/assets/svg/person-outline.svg" (click)="muestra('tabla')"></ion-icon></ion-fab-button>
+      <ion-fab-button><ion-icon src="/assets/svg/cog-outline.svg" (click)="muestra('fixture')"></ion-icon></ion-fab-button>
+        <ion-fab-button><ion-icon src="/assets/svg/mail-outline.svg" (click)="muestra('goleadores')"></ion-icon></ion-fab-button>
 
+  </ion-fab-list>
+</ion-fab>
 </ion-content>

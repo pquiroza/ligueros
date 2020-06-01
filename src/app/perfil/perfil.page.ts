@@ -6,11 +6,13 @@ import { Usuario  } from '../usuario';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { environment } from '../../environments/environment';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-perfil',
@@ -23,10 +25,12 @@ export class PerfilPage implements OnInit {
   public submitAttempt: boolean = false;
   public usuariosCollecion: AngularFirestoreCollection;
   us: any;
-  constructor(private router: Router, public formBuilder: FormBuilder, private afs: AngularFirestore, public alertCtrl: AlertController,private http: HttpClient) {
+  headers: any;
+  opcion: any;
+  constructor(private router: Router, public formBuilder: FormBuilder, private afs: AngularFirestore, public alertCtrl: AlertController,private http: HttpClient, private storage: Storage) {
     this.usuario = [];
     this.us = [];
-
+    this.opcion='perfil';
 
 
     firebase.auth().onAuthStateChanged(usuario => {
@@ -34,10 +38,21 @@ export class PerfilPage implements OnInit {
         this.router.navigate(['/login']);
       }
       else{
-        this.http.get('http://190.101.192.149/ligueros/api/getdatosusuario?id='+usuario.uid).subscribe(result => {
+        this.storage.get('tok').then(val => {
+          let data = [{
+            "IdGoogle": usuario.uid
+          }]
+          this.headers = new HttpHeaders({
+            'Authorization': "Bearer "+val
 
-          this.us = result;
-          console.log(this.us);
+          });
+          console.log(usuario.uid)
+          this.http.get(environment.server+'/usuario?idGoogle='+usuario.uid,{headers: this.headers}).subscribe((u: any) => {
+              this.us = u[0]
+              console.log(this.us)
+
+
+          })
         })
 
 
@@ -47,11 +62,10 @@ export class PerfilPage implements OnInit {
 
 
     this.perfilForm = formBuilder.group({
-        telefono:['',Validators.compose([Validators.required])],
-       nombre:['', Validators.compose([Validators.required])],
-       rut:['',Validators.compose([Validators.required])],
-       correo:['',Validators.compose([Validators.required])],
-       fechanacimiento:['',Validators.compose([Validators.required])]
+        Telefono:['',Validators.compose([Validators.required])],
+       Nombre:['', Validators.compose([Validators.required])],
+       Rut:['',Validators.compose([Validators.required])],
+       Correo:['',Validators.compose([Validators.required])]
     });
 
 
@@ -72,8 +86,44 @@ var user = firebase.auth().currentUser;
   else{
 
     console.log(this.perfilForm.value)
-    this.http.get('http://190.101.192.149/ligueros/api/actualizausuario?id='+user.uid+'&telefono='+this.perfilForm.value.telefono+'&nombre='+this.perfilForm.value.nombre+'&rut='+this.perfilForm.value.rut+'&fechanacimiento='+this.perfilForm.value.fechanacimiento+'&correo='+this.perfilForm.value.correo).subscribe(result => {
-      console.log(result);
+    let data = [{
+      "IdGoogle": user.uid
+    }]
+    console.log(user.uid)
+    this.http.get(environment.server+'/usuario?idGoogle='+user.uid).subscribe((u: any) => {
+      console.log(u.length)
+        if (u.length!=0){
+          console.log("entro")
+          let datos = [
+            {
+                "IdGoogle": user.uid,
+                "Nombre": this.perfilForm.value.Nombre,
+                "Correo": this.perfilForm.value.Correo,
+                "Telefono": this.perfilForm.value.Telefono,
+                "Rut": this.perfilForm.value.Rut,
+                "Contrasena": "Dummy"
+            }
+          ]
+            this.http.put(environment.server+'/usuario',datos,{observe: 'response'}).subscribe((result:any) => {
+              console.log(result)
+            })
+        }
+        else{
+          console.log("To new")
+          let datos = [
+            {
+                "IdGoogle": user.uid,
+                "Nombre": this.perfilForm.value.Nombre,
+                "Correo": this.perfilForm.value.Correo,
+                "Telefono": this.perfilForm.value.Telefono,
+                "Rut": this.perfilForm.value.Rut,
+                "Contrasena": "Dummy"
+            }
+          ]
+          this.http.post(environment.server+'/usuario',datos,{observe: 'response'}).subscribe((result:any) => {
+            console.log(result)
+          })
+        }
     })
 
 
@@ -101,5 +151,9 @@ async muestraAlerta(){
     }]
   });
   await alerta.present();
+}
+
+muestra(opcion){
+  this.opcion = opcion;
 }
 }

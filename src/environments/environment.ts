@@ -4,6 +4,7 @@
 
 export const environment = {
 production:false,
+server: "http://192.168.0.29:5001/ligueros/api",
 firebase:{
   apiKey: "AIzaSyAeE1UZ4_hxQpG9M85iT9HFQDuuJPnfFv4",
      authDomain: "ligueros-af5b3.firebaseapp.com",

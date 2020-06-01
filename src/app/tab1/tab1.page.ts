@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as firebase from "firebase";
 import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument  } from '@angular/fire/firestore';
 import { Usuario  } from '../usuario';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { Storage } from '@ionic/storage';
 
 
 
@@ -12,33 +15,63 @@ import { Usuario  } from '../usuario';
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page {
-  public usuariosCollection: AngularFirestoreCollection<Usuario>;
-
-  constructor(private router: Router, private afs: AngularFirestore) {
+export class Tab1Page  {
+  sigue: any;
+  noticias: any;
+  headers; any
+  constructor(private router: Router, private afs: AngularFirestore,private http: HttpClient, private storage: Storage) {
+  this.noticias = []
 
     firebase.auth().onAuthStateChanged(usuario => {
-      if (usuario){
-        this.usuariosCollection = this.afs.collection('Usuarios');
-        this.usuariosCollection.doc(usuario.uid).snapshotChanges().subscribe(data => {
-          if (data.payload.exists){
-            console.log("YA EXISTE")
-            console.log(data.payload.data());
-          }
-          else
-        {
-          console.log(usuario);
-        //  this.router.navigate(['/tabs/perfil']);
-          console.log("NO EXISTE CTM");
-        }
+
+      console.log(usuario)
+
+
+        this.storage.get('tok').then(val => {
+          console.log(val);
+          this.headers = new HttpHeaders({
+            'Authorization': "Bearer "+val
+
+          });
+          console.log(this.headers)
+
+
+                this.http.get(environment.server+'/noticias?idCampeonato=1',{headers: this.headers}).subscribe(camp => {
+                  console.log(camp)
+                  this.noticias = camp
+                })
+
         })
-      }
-      else{
-        this.router.navigate(['/login']);
-      }
+
+        //let header = new Headers({ 'Authorization': `Bearer ${token}` });
+
+
+
+
+
     })
 
 
   }
+ionViewDidEnter(){
 
+
+
+
+
+
+
+
+
+/*
+        this.http.get(environment.server+'/noticiasApp?IdGoogle='+usuario.uid).subscribe((noticias: any) => {
+          this.noticias = noticias;
+
+        })
+*/
+
+
+
+
+}
 }

@@ -1,0 +1,98 @@
+<ion-header translucent="true">
+  <ion-fab vertical="top" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="back()">
+    <ion-icon src="/assets/svg/arrow-back-outline.svg"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-toolbar class="info_toolbar">
+
+    <h5 ion-text color="light">{{equipo.NOMBRE}}</h5>
+    <h6 ion-text>{{equipo.DESCRIPCION}}</h6>
+    <ion-avatar  class="image-center">
+      <img src="/assets/defaultteam.png">
+    </ion-avatar>
+      <ion-icon *ngIf="sigue=='false'" size="large" margin-right name="ios-star" style="color:black" (click)="fav(equipo.IDEQUIPO)"></ion-icon>
+      <ion-icon *ngIf="sigue=='true'" size="large" margin-right name="ios-star" style="color:green" (click)="unfav(equipo.IDEQUIPO)"></ion-icon>
+
+
+  </ion-toolbar>
+
+</ion-header>
+<ion-content>
+  <ion-segment [(ngModel)]="segment">
+    <ion-segment-button value="resultados">Resultados
+
+    </ion-segment-button>
+    <ion-segment-button value="jugadores">Jugadores
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="segment">
+<div *ngSwitchDefault>
+  <ion-grid>
+
+    <ion-row>
+      <ion-col col-4 text-left>
+        <p>Local</p>
+        </ion-col>
+        <ion-col text-center>
+          <p>Resultado</p>
+          </ion-col>
+          <ion-col text-right>
+            <p>Visita</p>
+            </ion-col>
+      </ion-row>
+      <ion-row *ngFor="let c of calendario"   >
+        <ion-col class="ion-align-self-center"  text-left>
+          <p>{{c.EQUIPOL}}</p>
+          </ion-col>
+          <ion-col text-center >
+            <h6 *ngIf="c.FECHA=='None'">No agendado</h6>
+            <h6 *ngIf="c.FECHA!='None'">{{c.FECHA}}</h6>
+                <h3 *ngIf="c.GOLESL=='None'">0 - 0</h3>
+                      <h3 *ngIf="c.GOLESL!='None'">{{c.GOLESL}} - {{c.GOLESV}}</h3>
+            </ion-col>
+            <ion-col class="ion-align-self-center" text-right>
+              <p>{{c.EQUIPOV}}</p>
+              </ion-col>
+        </ion-row>
+    </ion-grid>
+
+  </div>
+
+  <div *ngSwitchCase="'jugadores'">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="8">
+        <p>Jugador</p>
+        </ion-col>
+          <ion-col size="2">
+            <p>Goles<p>
+            </ion-col>
+            <ion-col size="1">
+              <p>TA</p>
+              </ion-col>
+              <ion-col size="1">
+                <p>TR</p>
+                </ion-col>
+      </ion-row>
+      <ion-row *ngFor="let j of jugadores">
+        <ion-col size="8">
+          <p>{{j.NOMBRE}}</p>
+          </ion-col>
+          <ion-col size="2">
+            <p>{{j.GOLES}}</p>
+            </ion-col>
+            <ion-col size="1">
+              <p>{{j.TA}}</p>
+              </ion-col>
+              <ion-col size="1">
+                <p>{{j.TR}}</p>
+                </ion-col>
+        </ion-row>
+    </ion-grid>
+  </div>
+
+    </div>
+
+  </ion-content>
