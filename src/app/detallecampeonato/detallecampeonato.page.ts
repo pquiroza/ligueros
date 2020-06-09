@@ -25,7 +25,10 @@ export class DetallecampeonatoPage implements OnInit {
     idc: any
     headers: any;
     opcion: any;
-    constructor(private afs: AngularFirestore, private router: Router, public route: ActivatedRoute,private http: HttpClient, private storage: Storage) {
+    goleadores: any;
+    amonestados: any;
+    suspendidos: any;
+        constructor(private afs: AngularFirestore, private router: Router, public route: ActivatedRoute,private http: HttpClient, private storage: Storage) {
     this.campeonato = [];
     this.opcion = 'tabla'
     firebase.auth().onAuthStateChanged(usuario => {
@@ -58,6 +61,18 @@ export class DetallecampeonatoPage implements OnInit {
             this.http.get(environment.server+'/confirmaSigue?IdGoogle='+usuario.uid+'&IdCampeonato='+params.idc,{headers:this.headers}).subscribe(fav => {
               console.log(fav)
               this.sigue=fav;
+            })
+            this.http.get(environment.server+'/goleadores?IdCampeonato='+params.idc,{headers:this.headers}).subscribe((g: any) => {
+              console.log(g);
+              this.goleadores = g
+            })
+            this.http.get(environment.server+'/amonestados?IdCampeonato='+params.idc,{headers:this.headers}).subscribe((a: any) => {
+              console.log(a);
+              this.amonestados = a;
+            })
+            this.http.get(environment.server+'/suspendidos?IdCampeonato='+params.idc,{headers: this.headers}).subscribe((s: any) => {
+              console.log(s);
+              this.suspendidos= s;
             })
           })
 

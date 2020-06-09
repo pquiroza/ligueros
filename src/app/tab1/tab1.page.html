@@ -8,7 +8,7 @@
 
 <ion-content>
 
-    <ion-card class="welcome-card" *ngFor="let n of noticias">
+    <ion-card class="welcome-card" *ngFor="let n of noticias" (click)="detalleNoticia(n.IDNOTICIA)">
       <img src="{{n.URLFoto}}" alt="" />
       <ion-card-header>
         <ion-card-subtitle color="light">{{n.NOMBRECAMPEONATO}}</ion-card-subtitle>

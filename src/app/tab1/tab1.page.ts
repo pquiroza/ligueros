@@ -7,7 +7,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Storage } from '@ionic/storage';
-
+import { ModalController } from '@ionic/angular';
+import { DetallenoticiaPage } from "../detallenoticia/detallenoticia.page";
 
 
 @Component({
@@ -19,7 +20,7 @@ export class Tab1Page  {
   sigue: any;
   noticias: any;
   headers; any
-  constructor(private router: Router, private afs: AngularFirestore,private http: HttpClient, private storage: Storage) {
+  constructor(private router: Router, private afs: AngularFirestore,private http: HttpClient, private storage: Storage, private modal: ModalController) {
   this.noticias = []
 
     firebase.auth().onAuthStateChanged(usuario => {
@@ -73,5 +74,16 @@ ionViewDidEnter(){
 
 
 
+}
+
+async detalleNoticia(idn){
+  console.log(idn)
+ const modal = await this.modal.create({
+   component: DetallenoticiaPage,
+   componentProps: {
+     idn: idn
+   }
+ });
+ return await modal.present();
 }
 }

@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{noticia.TITULO}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-fab vertical="top" horizontal="end" slot="fixed">
+  <ion-fab-button color="light" (click)="close()">
+<ion-icon name="close-circle-outline"></ion-icon>  </ion-fab-button>
+</ion-fab>
+<ion-content>
+  <ion-slides>
+
+    <ion-slide *ngFor="let f of fotos" pager="true">
+      <div class="slide">
+        <img src="{{f.URL}}" />
+</div>
+    </ion-slide>
+
+
+  </ion-slides>
+          <ion-card-header>
+            <ion-card-subtitle>{{noticia.NOMBRECAMPEONATO}}</ion-card-subtitle>
+            <ion-card-title>{{noticia.TITULO}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <h3>{{noticia.FECHA}}</h3>
+            {{noticia.DESCRIPCION}}
+          </ion-card-content>
+
+</ion-content>

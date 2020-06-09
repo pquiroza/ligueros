@@ -1,7 +1,9 @@
 <ion-header>
 
   <ion-toolbar  class="tabs_bar">
-
+    <ion-title>
+      Configuración
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content  padding>
@@ -20,7 +22,7 @@
     <p *ngIf="submitAttempt" style="color: #ea6153;">Debe llenar todos los campos antes de guardar Perfil</p>
 
 
-    <div class="appForm"  margin-top>
+    <div class="appForm" *ngIf="opcion=='perfil'" margin-top>
       <ion-list>
           <form [formGroup]="perfilForm">
         <ion-item>
@@ -51,28 +53,57 @@
         <ion-label>Configuración Notificaciones</ion-label>
         </ion-list-header>
         <ion-item>
-   <ion-label>Noticias</ion-label>
-   <ion-toggle></ion-toggle>
+   <ion-label>Notificaciones</ion-label>
+   <ion-toggle  *ngIf="us.NOTIFICACIONES=='1'" checked (ionChange)="modifica($event,'NOTIFICACIONES')"></ion-toggle>
+   <ion-toggle  *ngIf="us.NOTIFICACIONES=='0'"  (ionChange)="modifica($event,'NOTIFICACIONES')"></ion-toggle>
+
    </ion-item>
    <ion-item>
 <ion-label>Calendario</ion-label>
-<ion-toggle></ion-toggle>
+<ion-toggle  *ngIf="us.CAMPCALENDARIO=='1'" checked (ionChange)="modifica($event,'CAMPCALENDARIO')"></ion-toggle>
+<ion-toggle  *ngIf="us.CAMPCALENDARIO=='0'"  (ionChange)="modifica($event,'CAMPCALENDARIO')"></ion-toggle>
+
+</ion-item>
+<ion-item>
+<ion-label>Noticias</ion-label>
+<ion-toggle  *ngIf="us.CAMPNOTICIAS=='1'" checked (ionChange)="modifica($event,'CAMPNOTICIAS')"></ion-toggle>
+<ion-toggle  *ngIf="us.CAMPNOTICIAS=='0'"  (ionChange)="modifica($event,'CAMPNOTICIAS')"></ion-toggle>
 </ion-item>
 <ion-item>
 <ion-label>Resultados</ion-label>
-<ion-toggle></ion-toggle>
-</ion-item>
+<ion-toggle  *ngIf="us.CAMPRESULTADOS=='1'" checked (ionChange)="modifica($event,'CAMPRESULTADOS')"></ion-toggle>
+<ion-toggle  *ngIf="us.CAMPRESULTADOS=='0'"  (ionChange)="modifica($event,'CAMPRESULTADOS')"></ion-toggle></ion-item>
 <ion-item>
 <ion-label>Resultados Equipos</ion-label>
-<ion-toggle></ion-toggle>
+<ion-toggle  *ngIf="us.EQUIPORESULTADOS=='1'" checked (ionChange)="modifica($event,'EQUIPORESULTADOS')"></ion-toggle>
+<ion-toggle  *ngIf="us.EQUIPORESULTADOS=='0'"  (ionChange)="modifica($event,'EQUIPORESULTADOS')"></ion-toggle>
 </ion-item>
 <ion-item>
 <ion-label>Calendario Equipos</ion-label>
-<ion-toggle></ion-toggle>
+<ion-toggle  *ngIf="us.EQUIPOCALENDARIO=='1'" checked (ionChange)="modifica($event,'EQUIPOCALENDARIO')"></ion-toggle>
+<ion-toggle  *ngIf="us.EQUIPOCALENDARIO=='0'"  (ionChange)="modifica($event,'EQUIPOCALENDARIO')"></ion-toggle>
 </ion-item>
       </ion-list>
       </div>
 <div *ngIf="opcion=='mensajes'">
+  <ion-list>
+    <ion-item>
+
+      <ion-label>
+        <h2>Mensaje 1</h2>
+        <h3>25-05-2020</h3>
+        <p>Aca se muestra el texto </p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+
+  <ion-label>
+    <h2>Mensaje 2</h2>
+    <h3>22-04-2020.</h3>
+    <p>Otro texto</p>
+  </ion-label>
+</ion-item>
+</ion-list>
   </div>
 
   <ion-fab vertical="bottom" horizontal="end"  slot="fixed">
@@ -80,9 +111,14 @@
     <ion-icon name="settings"></ion-icon>
   </ion-fab-button>
   <ion-fab-list side="start" >
-    <ion-fab-button><ion-icon src="/assets/svg/person-outline.svg" (click)="muestra('tabla')"></ion-icon></ion-fab-button>
-      <ion-fab-button><ion-icon src="/assets/svg/cog-outline.svg" (click)="muestra('fixture')"></ion-icon></ion-fab-button>
-        <ion-fab-button><ion-icon src="/assets/svg/mail-outline.svg" (click)="muestra('goleadores')"></ion-icon></ion-fab-button>
+    <ion-fab-button (click)="muestra('perfil')"><ion-icon src="/assets/svg/person-outline.svg" ></ion-icon></ion-fab-button>
+      <ion-fab-button (click)="muestra('notificaciones')"><ion-icon src="/assets/svg/cog-outline.svg" ></ion-icon></ion-fab-button>
+        <ion-fab-button  (click)="muestra('mensajes')">  <ion-icon src="/assets/svg/mail-outline.svg">
+        </ion-icon>
+
+
+<ion-badge color="danger">55</ion-badge>
+      </ion-fab-button>
 
   </ion-fab-list>
 </ion-fab>

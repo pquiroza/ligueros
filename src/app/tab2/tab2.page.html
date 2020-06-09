@@ -29,13 +29,13 @@
   <ion-list-header>
     <ion-label>Campeonatos disponibles</ion-label>
   </ion-list-header>
-    <ion-item *ngFor="let c of campeonatos " (click)="detalleCampeonato(c.IDCAMPEONATO)">
-      <ion-label>
+    <ion-item *ngFor="let c of campeonatos " >
+      <ion-label (click)="detalleCampeonato(c.IDCAMPEONATO)"  >
         <h2>{{c.NOMBRECAMPEONATO}}</h2>
         <h3>{{c.CATEGORIA}}</h3>
         <p>{{c.SEXO}}</p>
       </ion-label>
-
+<ion-toggle (ionChange)=fav(c.IDCAMPEONATO)></ion-toggle>
 
 
 

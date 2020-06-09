@@ -1,5 +1,7 @@
 {
   "name": "ligueros",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

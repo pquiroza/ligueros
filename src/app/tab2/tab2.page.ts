@@ -74,5 +74,17 @@ if(usuario){
 
 
   }
-
+fav(idc){
+  firebase.auth().onAuthStateChanged(usuario => {
+    if (usuario){
+      let data = [{
+        "IdCampeonato": idc,
+        "IdGoogle": usuario.uid
+      }]
+      this.http.post(environment.server+'/sigue',data,{observe:'response',headers: this.headers}).subscribe(r => {
+        console.log(r);
+      })
+    }
+  })
+}
 }

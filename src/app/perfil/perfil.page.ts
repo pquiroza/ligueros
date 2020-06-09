@@ -46,6 +46,7 @@ export class PerfilPage implements OnInit {
             'Authorization': "Bearer "+val
 
           });
+
           console.log(usuario.uid)
           this.http.get(environment.server+'/usuario?idGoogle='+usuario.uid,{headers: this.headers}).subscribe((u: any) => {
               this.us = u[0]
@@ -154,6 +155,45 @@ async muestraAlerta(){
 }
 
 muestra(opcion){
+  console.log(opcion)
   this.opcion = opcion;
 }
+
+modifica(a,b){
+  console.log(a.detail.checked)
+  console.log(b)
+
+
+  firebase.auth().onAuthStateChanged(usuario => {
+    if (usuario){
+      this.storage.get('tok').then(val => {
+        this.headers = new HttpHeaders({
+          'Authorization': "Bearer "+val
+
+        });
+        let valor = 0;
+        if (a.detail.checked){
+          valor=1
+        }
+        else{
+          valor=0
+        }
+        let datos =  [
+          {
+            "IDGOOGLE": usuario.uid,
+            "NOTIFICACION": b,
+            "VALOR": valor
+          }
+        ]
+
+        console.log(this.headers)
+        this.http.put(environment.server+'/confNotificacion',datos,{observe: 'response', headers: this.headers}).subscribe(a => {
+          console.log(a)
+        })
+
+      })
+    }
+  })
+}
+
 }

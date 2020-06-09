@@ -21,8 +21,10 @@ export class DetalleequipoPage implements OnInit {
   calendario: any;
   idc: any;
   headers: any;
+  opcion: any;
   constructor(private afs: AngularFirestore, private router: Router, public route: ActivatedRoute,private http: HttpClient, private storage: Storage) {
     this.equipo = []
+    this.opcion = 'resultados'
       firebase.auth().onAuthStateChanged(usuario => {
         if(usuario){
           this.route.queryParams.subscribe(params => {
@@ -85,5 +87,8 @@ fav(ide){
     }
   })
 }
-
+muestra(opcion){
+  console.log(opcion)
+  this.opcion = opcion
+}
 }

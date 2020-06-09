@@ -112,13 +112,82 @@
     </ion-grid>
   </div>
   <div *ngIf="opcion=='goleadores'">
-    Goleadores
+    <ion-grid>
+      <ion-row>
+        <ion-col size="4">
+          <p>Jugador</p>
+          </ion-col>
+          <ion-col size="4">
+            <p>Equipo</p>
+            </ion-col>
+            <ion-col>
+              <p>Goles</p>
+              </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let g of goleadores">
+          <ion-col size="4">
+            <p>{{g.NOMBRE}}</p>
+            </ion-col>
+            <ion-col size="4">
+              <p>{{g.EQUIPO}}</p>
+              </ion-col>
+              <ion-col>
+                <p>{{g.GOLES}}</p>
+                </ion-col>
+          </ion-row>
+      </ion-grid>
     </div>
     <div *ngIf="opcion=='tarjetas'">
-      Tarjetas
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4">
+            <p>Jugador</p>
+            </ion-col>
+            <ion-col size="4">
+              <p>Equipo</p>
+              </ion-col>
+              <ion-col>
+                <p>TA</p>
+                </ion-col>
+          </ion-row>
+          <ion-row *ngFor="let g of amonestados">
+            <ion-col size="4">
+              <p>{{g.NOMBRE}}</p>
+              </ion-col>
+              <ion-col size="4">
+                <p>{{g.EQUIPO}}</p>
+                </ion-col>
+                <ion-col>
+                  <p>{{g.TA}}</p>
+                  </ion-col>
+            </ion-row>
+        </ion-grid>
       </div>
       <div *ngIf="opcion=='suspendidos'">
-        Suspendidos
+        <ion-grid>
+          <ion-row>
+            <ion-col size="4">
+              <p>Jugador</p>
+              </ion-col>
+              <ion-col size="4">
+                <p>Equipo</p>
+                </ion-col>
+                <ion-col>
+                  <p>Fechas</p>
+                  </ion-col>
+            </ion-row>
+            <ion-row *ngFor="let g of suspendidos">
+              <ion-col size="4">
+                <p>{{g.NOMBRESUSPENDIDO}}</p>
+                </ion-col>
+                <ion-col size="4">
+                  <p>{{g.EQUIPO}}</p>
+                  </ion-col>
+                  <ion-col>
+                    <p>{{g.FECHAS}}</p>
+                    </ion-col>
+              </ion-row>
+          </ion-grid>
 
         </div>
 

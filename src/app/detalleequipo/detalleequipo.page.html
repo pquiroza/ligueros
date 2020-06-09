@@ -19,16 +19,10 @@
 
 </ion-header>
 <ion-content>
-  <ion-segment [(ngModel)]="segment">
-    <ion-segment-button value="resultados">Resultados
 
-    </ion-segment-button>
-    <ion-segment-button value="jugadores">Jugadores
-    </ion-segment-button>
-  </ion-segment>
 
-  <div [ngSwitch]="segment">
-<div *ngSwitchDefault>
+
+<div *ngIf="opcion=='resultados'">
   <ion-grid>
 
     <ion-row>
@@ -60,7 +54,7 @@
 
   </div>
 
-  <div *ngSwitchCase="'jugadores'">
+  <div *ngIf="opcion=='jugadores'">
   <ion-grid>
     <ion-row>
       <ion-col size="8">
@@ -93,6 +87,16 @@
     </ion-grid>
   </div>
 
-    </div>
 
+
+      <ion-fab vertical="bottom" horizontal="end"  slot="fixed">
+      <ion-fab-button>
+        <ion-icon name="settings"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list side="start" >
+        <ion-fab-button (click)="muestra('resultados')"><ion-icon src="/assets/svg/football-outline.svg" ></ion-icon></ion-fab-button>
+          <ion-fab-button (click)="muestra('jugadores')"><ion-icon src="/assets/svg/people-outline.svg" ></ion-icon></ion-fab-button>
+
+      </ion-fab-list>
+    </ion-fab>
   </ion-content>

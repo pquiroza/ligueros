@@ -25,6 +25,14 @@ const routes: Routes = [
   {
     path: 'tab4',
     loadChildren: () => import('./tab4/tab4.module').then( m => m.Tab4PageModule)
+  },
+  {
+    path: 'detallenoticia',
+    loadChildren: () => import('./detallenoticia/detallenoticia.module').then( m => m.DetallenoticiaPageModule)
+  },
+  {
+    path: 'detallepartido',
+    loadChildren: () => import('./detallepartido/detallepartido.module').then( m => m.DetallepartidoPageModule)
   }
 ];
 @NgModule({
