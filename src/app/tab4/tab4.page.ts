@@ -5,6 +5,7 @@ import * as firebase from "firebase";
 
 import { Storage } from '@ionic/storage';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { environment } from '../../environments/environment';
 export class Tab4Page implements OnInit {
   headers: any;
   calendario: any;
-  constructor(private http: HttpClient, private storage: Storage) {
+  constructor(private http: HttpClient, private storage: Storage, private router: Router) {
 
     firebase.auth().onAuthStateChanged(usuario => {
       if(usuario){
@@ -24,6 +25,7 @@ export class Tab4Page implements OnInit {
             'Authorization': "Bearer "+val
           });
           this.http.get(environment.server+'/calendarioUsuario?IdGoogle='+usuario.uid,{headers:this.headers}).subscribe((e: any) => {
+            console.log(e);
             this.calendario = e;
           })
 
@@ -34,6 +36,10 @@ export class Tab4Page implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  detallePartido(idp){
+    this.router.navigate(['/detallepartido'],{queryParams:{idp:idp}})
   }
 
 }

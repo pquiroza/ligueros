@@ -1,9 +1,100 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>detallepartido</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-header translucent="true">
+  <ion-fab vertical="top" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="back()">
+    <ion-icon src="/assets/svg/arrow-back-outline.svg"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-toolbar class="info_toolbar">
 
+
+
+    <ion-row>
+    <ion-col  class="ion-text-center">
+      <h3 ion-text color="light">{{general.EQUIPOL}}   </h3>
+      </ion-col>
+      <ion-col  class="ion-text-center">
+        <h3 ion-text color="light">    <ion-col>{{general.EQUIPOV}} </ion-col></h3>
+
+        </ion-col>
+        </ion-row>
+
+
+
+  </ion-toolbar>
+
+</ion-header>
 <ion-content>
+<ion-grid>
+  <ion-row>
+  <ion-col style="border: 1px solid #aeb7ca" class="ion-text-center">
+    <h3 ion-text color="light">{{general.GOLESL}}</h3>
+    </ion-col>
+    <ion-col  style="border: 1px solid #aeb7ca" class="ion-text-center">
+      <h3 ion-text color="light">    <ion-col>{{general.GOLESV}}</ion-col></h3>
+
+      </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="ion-text-center"><ion-text>Goles</ion-text></ion-col>
+        </ion-row>
+      <ion-row style="border: 1px solid #aeb7ca">
+        <ion-col style="border: 1px solid #aeb7ca">
+
+          <ion-list>
+            <ion-item *ngFor="let lg of localg">
+              <ion-text>{{lg.NombreJugador}}</ion-text>
+                    <ion-text slot="end" color="primary">{{lg.Goles}}</ion-text></ion-item>
+            </ion-list>
+          </ion-col>
+          <ion-col>
+            <ion-list>
+              <ion-item *ngFor="let vg of visitag">
+                <ion-text>{{vg.NombreJugador}}</ion-text>
+                      <ion-text slot="end" color="primary">{{vg.Goles}}</ion-text></ion-item>
+              </ion-list>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="ion-text-center"><ion-text>Tarjetas Amarillas</ion-text></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col style="border: 1px solid #aeb7ca">
+              <ion-list>
+                <ion-item *ngFor="let lta of localta">
+                  <ion-text>{{lta.NombreJugador}}</ion-text>
+                  </ion-item>
+                </ion-list>
+              </ion-col>
+              <ion-col   style="border: 1px solid #aeb7ca">
+                <ion-list>
+                  <ion-item *ngFor="let vta of visitata">
+                    <ion-text>{{vta.NombreJugador}}</ion-text>
+                    </ion-item>
+                  </ion-list>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-center"><ion-text>Tarjetas Rojas</ion-text></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col  style="border: 1px solid #aeb7ca">
+                  <ion-list>
+                    <ion-item *ngFor="let ltr of localtr">
+                          <ion-text>{{ltr.NombreJugador}}</ion-text>
+                      </ion-item>
+                    </ion-list>
+                  </ion-col>
+                  <ion-col  style="border: 1px solid #aeb7ca">
+                    <ion-list>
+                      <ion-item *ngFor="let vtr of visitatr">
+                            <ion-text>{{vtr.NombreJugador}}</ion-text>
+                        </ion-item>
+                      </ion-list>
+                    </ion-col>
+                </ion-row>
+  </ion-grid>
+
+
+
 
 </ion-content>

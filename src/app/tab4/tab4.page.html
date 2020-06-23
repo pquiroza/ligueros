@@ -17,7 +17,7 @@
             <p>Visita</p>
             </ion-col>
       </ion-row>
-      <ion-row *ngFor="let c of calendario"   >
+      <ion-row *ngFor="let c of calendario"  (click)="detallePartido(c.IDPARTIDO)" >
         <ion-col class="ion-align-self-center"  text-left>
           <p>{{c.EQUIPOL}}</p>
           </ion-col>
