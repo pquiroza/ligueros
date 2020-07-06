@@ -27,11 +27,12 @@ export class PerfilPage implements OnInit {
   us: any;
   headers: any;
   opcion: any;
+  notificaciones: any;
   constructor(private router: Router, public formBuilder: FormBuilder, private afs: AngularFirestore, public alertCtrl: AlertController,private http: HttpClient, private storage: Storage) {
     this.usuario = [];
     this.us = [];
     this.opcion='perfil';
-
+    this.notificaciones = [];
 
     firebase.auth().onAuthStateChanged(usuario => {
       if (!usuario){
@@ -54,6 +55,11 @@ export class PerfilPage implements OnInit {
 
 
           })
+
+          this.getNotificaciones().then(n => {
+
+          })
+
         })
 
 
@@ -195,5 +201,20 @@ modifica(a,b){
     }
   })
 }
+
+getNotificaciones(){
+  return new Promise((resolve,reject) => {
+    firebase.auth().onAuthStateChanged(usuario => {
+      if (usuario){
+        this.http.get(environment.server+'/notificaciones?IdGoogle='+usuario.uid,{headers:this.headers}).subscribe((n: any) => {
+          console.log(n)
+          this.notificaciones = n;
+          resolve()
+        })
+      }
+    })
+  })
+}
+
 
 }

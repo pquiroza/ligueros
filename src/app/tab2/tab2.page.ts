@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument  } from '@angular/fire/firestore';
 import { Campeonato } from '../campeonato';
 import { Storage } from '@ionic/storage';
-
+import { EventsService } from '../events.service';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -28,9 +28,14 @@ campeonatos: any[] = [];
 favoritos: any[] = [];
 favs: any[] = [];
 headers; any
-  constructor(private router: Router, private afs: AngularFirestore, private http: HttpClient, private storage: Storage) {
+  constructor(private router: Router, private afs: AngularFirestore, private http: HttpClient, private storage: Storage, private events: EventsService) {
 
+    this.events.subscribe('unfav:campeonato', (data: any) => {
+      console.log("DATOS DE EVENTO")
+      this.getDatos().then(r => {
 
+      })
+    })
 
 
   }
@@ -43,34 +48,11 @@ headers; any
 
   ionViewDidEnter(){
     this.campeonatos = []
-      firebase.auth().onAuthStateChanged(usuario => {
-if(usuario){
-                this.storage.get('tok').then(val => {
-                  this.headers = new HttpHeaders({
-                    'Authorization': "Bearer "+val
 
-                  });
-                  this.http.get(environment.server+'/allCampeonatos',{headers:this.headers}).subscribe((u: any) => {
+    this.getDatos().then(u => {
+      console.log(u)
 
-                      u.forEach(c => {
-                        console.log(c)
-                        this.campeonatos.push(c)
-                      })
-
-                  })
-                  this.http.get(environment.server+'/sigue?IdGoogle='+usuario.uid,{headers: this.headers}).subscribe((f: any) => {
-                    console.log(f)
-                    this.favoritos = f;
-                  })
-                })
-
-
-
-
-
-        }
-      })
-
+    })
 
 
   }
@@ -83,8 +65,61 @@ fav(idc){
       }]
       this.http.post(environment.server+'/sigue',data,{observe:'response',headers: this.headers}).subscribe(r => {
         console.log(r);
+        this.getDatos().then(u => {
+
+        })
       })
     }
+  })
+}
+
+unfav(idc){
+  firebase.auth().onAuthStateChanged(usuario => {
+    if (usuario){
+      let data = [{
+        "IdCampeonato": idc,
+        "IdGoogle": usuario.uid
+      }]
+      console.log(this.headers)
+
+
+      this.http.delete(environment.server+'/sigue?IdGoogle='+usuario.uid+'&IdCampeonato='+idc,{observe:'response',headers: this.headers}).subscribe(r => {
+        this.getDatos().then(u => {
+          console.log(u)
+
+        })
+      })
+    }
+  })
+}
+
+
+getDatos(){
+  return new Promise((resolve,reject) => {
+    firebase.auth().onAuthStateChanged(usuario => {
+if(usuario){
+              this.storage.get('tok').then(val => {
+                this.headers = new HttpHeaders({
+                  'Authorization': "Bearer "+val
+
+                });
+                this.http.get(environment.server+'/allCampeonatos?IdGoogle='+usuario.uid,{headers:this.headers}).subscribe((u: any) => {
+                    console.log(u)
+                    this.favoritos = u[0]
+                    this.campeonatos = u[1]
+                    resolve()
+
+                })
+
+              })
+
+
+
+
+
+      }
+    })
+
   })
 }
 }

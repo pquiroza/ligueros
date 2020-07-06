@@ -12,15 +12,17 @@
     <ion-list-header>
       <ion-label>Mis Favoritos</ion-label>
     </ion-list-header>
-      <ion-item *ngFor="let f of favoritos " (click)="detalleCampeonato(f.IDCAMPEONATO)">
-        <ion-label>
-          <h2>{{f.NOMBRECAMPEONATO}}</h2>
-        </ion-label>
+    <ion-item *ngFor="let f of favoritos " >
+      <ion-label (click)="detalleCampeonato(f.IDCAMPEONATO)"  >
+        <h2>{{f.NOMBRECAMPEONATO}}</h2>
+        <h3>{{f.CATEGORIA}}</h3>
+        <p>{{f.SEXO}}</p>
+      </ion-label>
+<ion-toggle checked (ionChange)=unfav(f.IDCAMPEONATO)></ion-toggle>
 
 
 
-
-        </ion-item>
+      </ion-item>
 
     </ion-list>
 

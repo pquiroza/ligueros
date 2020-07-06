@@ -25,24 +25,7 @@ export class Tab1Page  {
 
     firebase.auth().onAuthStateChanged(usuario => {
 
-      console.log(usuario)
 
-
-        this.storage.get('tok').then(val => {
-          console.log(val);
-          this.headers = new HttpHeaders({
-            'Authorization': "Bearer "+val
-
-          });
-          console.log(this.headers)
-
-
-                this.http.get(environment.server+'/noticias?idCampeonato=1',{headers: this.headers}).subscribe(camp => {
-                  console.log(camp)
-                  this.noticias = camp
-                })
-
-        })
 
         //let header = new Headers({ 'Authorization': `Bearer ${token}` });
 
@@ -53,6 +36,27 @@ export class Tab1Page  {
     })
 
 
+  }
+
+
+  ionViewWillEnter(){
+
+
+      this.storage.get('tok').then(val => {
+        console.log(val);
+        this.headers = new HttpHeaders({
+          'Authorization': "Bearer "+val
+
+        });
+        console.log(this.headers)
+
+
+              this.http.get(environment.server+'/noticias?idCampeonato=1',{headers: this.headers}).subscribe(camp => {
+                console.log(camp)
+                this.noticias = camp
+              })
+
+      })
   }
 ionViewDidEnter(){
 
