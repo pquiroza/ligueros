@@ -87,12 +87,12 @@
       </div>
 <div *ngIf="opcion=='mensajes'">
   <ion-list>
-    <ion-item>
+    <ion-item *ngFor="let n of notificaciones">
 
       <ion-label>
-        <h2>Mensaje 1</h2>
-        <h3>25-05-2020</h3>
-        <p>Aca se muestra el texto </p>
+        <h3>{{n.NOMBRECAMPEONATO}}</h3>
+        <h2>{{n.DESCRIPCION}}</h2>
+<p>{{n.FECHACREACION}}</p>
       </ion-label>
     </ion-item>
     <ion-item>
