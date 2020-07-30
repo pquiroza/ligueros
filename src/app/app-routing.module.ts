@@ -33,6 +33,10 @@ const routes: Routes = [
   {
     path: 'detallepartido',
     loadChildren: () => import('./detallepartido/detallepartido.module').then( m => m.DetallepartidoPageModule)
+  },
+  {
+    path: 'detallenotificacio',
+    loadChildren: () => import('./detallenotificacio/detallenotificacio.module').then( m => m.DetallenotificacioPageModule)
   }
 ];
 @NgModule({

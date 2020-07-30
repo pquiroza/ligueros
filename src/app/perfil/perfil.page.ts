@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument  } from '@angular/fire/firestore';
 import { Usuario  } from '../usuario';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { environment } from '../../environments/environment';
 import { Storage } from '@ionic/storage';
-
+import { DetallenotificacioPage } from '../detallenotificacio/detallenotificacio.page';
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.page.html',
@@ -28,7 +28,8 @@ export class PerfilPage implements OnInit {
   headers: any;
   opcion: any;
   notificaciones: any;
-  constructor(private router: Router, public formBuilder: FormBuilder, private afs: AngularFirestore, public alertCtrl: AlertController,private http: HttpClient, private storage: Storage) {
+  numnotificaciones: any;
+  constructor(private router: Router, public formBuilder: FormBuilder, private afs: AngularFirestore, public alertCtrl: AlertController,private http: HttpClient, private storage: Storage, private modalController: ModalController) {
     this.usuario = [];
     this.us = [];
     this.opcion='perfil';
@@ -54,6 +55,10 @@ export class PerfilPage implements OnInit {
               console.log(this.us)
 
 
+          })
+          this.getNumNotifiacciones().then(n => {
+            console.log(n)
+          this.numnotificaciones = n;
           })
 
           this.getNotificaciones().then(n => {
@@ -216,5 +221,28 @@ getNotificaciones(){
   })
 }
 
+getNumNotifiacciones(){
+  return new Promise((resolve, reject) => {
+    firebase.auth().onAuthStateChanged(usuario => {
+      if (usuario){
+        this.http.get(environment.server+'/cantNotificaciones?IdGoogle='+usuario.uid, {headers: this.headers}).subscribe((n: any) => {
+          console.log(n)
+          resolve(n)
+        })
+      }
+    })
+  })
+}
+async detalleNotificacion(notificacion){
+  console.log(notificacion)
+  const modal = await this.modalController.create({
+    component: DetallenotificacioPage,
+    componentProps:{
+      'notificacion': notificacion
+    }
+
+  });
+  return await modal.present();
+}
 
 }

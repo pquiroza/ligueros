@@ -14,10 +14,11 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { DetallenoticiaPage } from './detallenoticia/detallenoticia.page'
+import { DetallenotificacioPage } from './detallenotificacio/detallenotificacio.page';
 firebase.initializeApp(environment.firebase);
 @NgModule({
-  declarations: [AppComponent,  DetallenoticiaPage],
-  entryComponents: [  DetallenoticiaPage],
+  declarations: [AppComponent,  DetallenoticiaPage, DetallenotificacioPage],
+  entryComponents: [  DetallenoticiaPage, DetallenotificacioPage],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
   AngularFirestoreModule,
